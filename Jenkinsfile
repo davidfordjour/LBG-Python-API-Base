@@ -4,6 +4,7 @@ pipeline {
     environment {
         DOCKER_IMAGE="lbg"
         PORT=5001
+        DOCKER_CREDENTIALS=credentials("DOCKER_CREDENTIALS")
     }
     stages {
         stage('Building image') {
@@ -27,7 +28,7 @@ pipeline {
         stage('Pushing image to dockerhub') {
             steps {
                sh '''
-                  docker push davidfordj98/3839f9875827:latest 
+                  docker push $(DOCKER_CREDENTIALS.USR)/3839f9875827:latest 
                 '''
              }
         }
