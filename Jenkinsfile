@@ -27,7 +27,7 @@ pipeline {
         stage('Pushing image to dockerhub') {
             steps {
                sh '''
-                  docker push davidfordj98/lbg:latest 
+                  docker push davidfordj98/3839f9875827:latest 
                 '''
              }
         }
