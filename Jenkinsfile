@@ -21,6 +21,7 @@ pipeline {
                 sleep 3
                 docker run -d -p 5000:$PORT -e PORT=$PORT $DOCKER_IMAGE
                 '''
+           }
         }
     }
 }
