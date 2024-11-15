@@ -3,8 +3,7 @@ pipeline {
     
     environment {
         DOCKER_IMAGE="lbg"
-        PORT=5001
-        DOCKER_CREDENTIALS=credentials("DOCKER_CREDENTIALS")
+        PORT="5001"
     }
     stages {
         stage('Building image') {
@@ -27,10 +26,16 @@ pipeline {
         }
         stage('Pushing image to dockerhub') {
             steps {
-               sh '''
-                  docker push $(DOCKER_CREDENTIALS.USR)/3839f9875827:latest 
-                '''
-             }
-        }
-    }
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_CREDENTIALS', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        sh '''
+                        docker tag $DOCKER_IMAGE $DOCKER_USERNAME/$DOCKER_IMAGE
+                        docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+                        docker push ${DOCKER_USERNAME}/$DOCKER_IMAGE:latest 
+                        '''
+              }    
+           }
+         }
+      }
+   }
 }
