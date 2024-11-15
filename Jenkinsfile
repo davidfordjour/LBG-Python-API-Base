@@ -15,6 +15,7 @@ pipeline {
                 docker build -t $DOCKER_IMAGE .
                 '''
             }
+        }
         stage('Running container') {
             steps {
                 sh '''
