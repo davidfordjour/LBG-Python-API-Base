@@ -24,5 +24,12 @@ pipeline {
                 '''
            }
         }
+        stage('Pushing image to dockerhub') {
+            steps {
+               sh '''
+                  docker login
+                  docker push davidfordj98/lbg:latest 
+                ''' }
+        }
     }
 }
